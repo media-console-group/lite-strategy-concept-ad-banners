@@ -1,0 +1,352 @@
+/* ── Concept D — Corporate site / brand-native ─────────────────────
+   The advertiser's own corporate website (litestrategy.com), extended into a 300x600 ad. Every token below was read
+   from that site's live computed styles: dark ground #020307, indigo #17163E, sky #88CBF5, lime #D0FF49 (the heading
+   gradient), body grey #999EAF, off-white #F7F8F5; cards = linear-gradient(245deg, #17163E, #020307) with a 1px sky 37%
+   border and 15px radius; glass pill buttons (40px radius, 1px white 38% border, Rethink Sans 600); IBM Plex Sans
+   Condensed 900 uppercase headline. The site has no photography, so the ground is its own tiled logo mark.
+
+   Each slide is one module of the corporate homepage, built from shared parts:
+     .m-hero   hero: gradient headline, white sub-line, stat card
+     .m-stats  dashboard stat cards
+     .m-cards  three-card row with gradient icon tiles
+     .m-panel  CTA panel (radial indigo gradient, 20px radius)
+   Parts: .d-card (.d-title, .d-num, .d-note), .d-tile, .d-panel, .d-stats > .d-stat. ── */
+:root {
+  /* Source tokens — litestrategy.com */
+  --primary:    #88CBF5;   /* card titles, dots, tile gradient start */
+  --secondary:  #D0FF49;   /* heading-gradient end */
+  --page-bg:    #020307;
+  --indigo:     #17163E;
+  --ink:        #F7F8F5;   /* headings, values, button label */
+  --text:       #999EAF;   /* body copy */
+  --white:      #FFFFFF;
+  --border:     rgba(136,203,245,0.37);   /* card / panel border: sky at 37% */
+  --glass:      rgba(205,211,233,0.09);
+  --glass-grad: radial-gradient(rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.28) 150%);
+  --glass-line: rgba(255,255,255,0.38);
+  --btn-radius: 40px;
+
+  /* Derived */
+  --card-grad:  linear-gradient(245deg, var(--indigo) 0%, var(--page-bg) 100%);
+  --head-grad:  linear-gradient(90deg, var(--primary) 28%, var(--secondary) 75%);
+  --on-dark-2:  rgba(247,248,245,0.82);
+
+  /* Type — the site's own Google Fonts (the link in index.html <head>) */
+  --font-head: 'IBM Plex Sans Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-btn:  'Rethink Sans', 'IBM Plex Sans', system-ui, sans-serif;
+  --ease:      cubic-bezier(0.16,1,0.3,1);
+
+  /* Geometry (fixed 300x600 stage) */
+  --gutter:    14px;
+  --hdr-h:     48px;
+  --bf-pad:    8px;           /* bottom block: space above the controls row */
+  --ctrl-h:    22px;          /* dots + arrows row */
+  --bf-gap:    8px;           /* controls -> CTA */
+  --cta-h:     38px;
+  --bf-gap-2:  9px;           /* CTA -> disclosure strip */
+  --foot-h:    58px;          /* disclosure strip: five lines */
+  --bf-h:      calc(var(--bf-pad) + var(--ctrl-h) + var(--bf-gap) + var(--cta-h) + var(--bf-gap-2) + var(--foot-h));
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:300px; height:600px; overflow:hidden; background:var(--page-bg); }
+body { font-family:var(--font-body); color:var(--text); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+a { text-decoration:none; color:inherit; }
+button { border:0; background:none; font:inherit; color:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.slide p, .slide li { text-wrap-style:pretty; }   /* no one-word last lines; style only: the text-wrap shorthand would reset white-space:nowrap on .d-num */
+
+/* ── Canvas: the site's ground (near-black, indigo glow from below, the tiled mark) ── */
+#banner {
+  position:relative;
+  width:300px;
+  height:600px;
+  overflow:hidden;
+  cursor:pointer;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2250.8%22 viewBox=%220 0 60 50.8%22%3E%3Cdefs%3E%3Cg id=%22m%22%3E%3Cpath d=%22M85.2178 88.1691L71.887 114.818C71.4215 115.762 70.4518 116.369 69.3915 116.369H26.658C17.3743 116.369 8.90513 111.637 4.00467 103.724C-0.88286 95.7978 -1.32248 86.1133 2.82804 77.7993L40.9715 1.53866C41.4499 0.594776 42.4196 0 43.4799 0H73.2705C75.3522 0 76.7099 2.18516 75.7789 4.04706L37.7648 80.0621C36.8339 81.924 38.1915 84.122 40.2733 84.122H82.7094C84.7912 84.122 86.1488 86.3072 85.2178 88.1691Z%22/%3E%3Cpath d=%22M149.662 72.1878L111.505 148.448C111.04 149.392 110.07 150 108.997 150H79.2193C77.1376 150 75.7799 147.802 76.7109 145.94L114.725 69.925C115.656 68.0631 114.298 65.878 112.217 65.878H69.7804C67.6987 65.878 66.341 63.6799 67.272 61.818L70.039 56.2839L71.2156 53.9178L79.0383 38.2596L80.5769 35.1694C81.0553 34.2255 82.0251 33.6307 83.0853 33.6307H125.806C135.103 33.6307 143.572 38.3501 148.472 46.2633C153.36 54.1893 153.799 63.8738 149.649 72.1878H149.662Z%22/%3E%3C/g%3E%3C/defs%3E%3Cg fill=%22%23fff%22 fill-opacity=%22.032%22%3E%3Cuse href=%22%23m%22 transform=%22translate(0 0) scale(0.169)%22/%3E%3Cuse href=%22%23m%22 transform=%22translate(30 0) scale(0.169)%22/%3E%3Cuse href=%22%23m%22 transform=%22translate(11.03 50.75) rotate(180) scale(0.169)%22/%3E%3Cuse href=%22%23m%22 transform=%22translate(41.03 50.75) rotate(180) scale(0.169)%22/%3E%3Cuse href=%22%23m%22 transform=%22translate(71.03 50.75) rotate(180) scale(0.169)%22/%3E%3C/g%3E%3C/svg%3E") 0 0 / 60px 50.8px repeat,
+    radial-gradient(130% 62% at 50% 100%, var(--indigo) 0%, var(--page-bg) 82%),
+    var(--page-bg);
+}
+
+/* ── Slide stack: each slide fills only the space between the header and the bottom block ── */
+#slides { position:absolute; inset:0; z-index:1; }
+.slide {
+  position:absolute;
+  left:0; right:0;
+  top:var(--hdr-h);
+  bottom:var(--bf-h);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:0 var(--gutter);
+  opacity:0;
+  z-index:1;
+  pointer-events:none;
+  transition:opacity 0.9s ease;
+}
+.slide.active { opacity:1; z-index:2; pointer-events:auto; }
+
+/* Content rises in on each slide change */
+.slide > * { transform:translateY(10px); transition:transform 0.9s var(--ease); }
+.slide.active > * { transform:none; }
+
+/* ── Shared parts ─────────────────────────────────────────────────── */
+/* Section heading (the site's centred 600 white H2) */
+.sec-h {
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:18px;
+  line-height:1.22;
+  text-align:center;
+  color:var(--ink);
+  text-wrap:balance;
+  margin:0 6px 16px;
+}
+
+/* Card: indigo gradient, sky 37% border (the dashboard stat cards and the three-card row) */
+.d-card {
+  background:var(--card-grad);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:13px 14px 14px;
+}
+.d-card + .d-card { margin-top:10px; }
+.d-title {   /* .elementor-heading-title in a stat card: sky, 600 */
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:11.5px;
+  line-height:1.25;
+  color:var(--primary);
+}
+.d-num {     /* the stat value: off-white, 500 */
+  font-family:var(--font-body);
+  font-weight:500;
+  font-size:26px;
+  line-height:1.15;
+  color:var(--ink);
+  white-space:nowrap;
+}
+.d-note {
+  margin-top:3px;
+  font-size:9.6px;
+  line-height:1.42;
+  color:var(--text);
+}
+.d-card-hi .d-num {                /* the key figure takes the site's heading gradient */
+  background:var(--head-grad);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+}
+
+/* ── Module: hero ───────────────────────────────────────────────────── */
+.hero-h {                          /* the site's H1: IBM Plex Sans Condensed 900, uppercase, sky-to-lime gradient */
+  font-family:var(--font-head);
+  font-weight:700;
+  font-size:38px;
+  line-height:1.0;
+  text-transform:uppercase;
+  text-align:center;
+  letter-spacing:0.004em;
+  background:var(--head-grad);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+}
+.hero-h span { display:block; }
+.hero-sub {                        /* h3 under the H1: IBM Plex Sans 600, off-white */
+  margin:14px 10px 0;
+  font-weight:600;
+  font-size:14px;
+  line-height:1.3;
+  text-align:center;
+  color:var(--ink);
+}
+.hero-card { margin-top:26px; text-align:center; padding:15px 14px 15px; }
+.hero-card .d-num { font-size:38px; margin-top:2px; }
+.hero-card .d-note { margin-top:5px; }
+
+/* ── Module: dashboard stat cards ───────────────────────────────────── */
+.m-stats .d-card { display:grid; grid-template-columns:1fr auto; column-gap:10px; align-items:end; }
+.m-stats .d-title { grid-column:1; grid-row:1; align-self:start; }
+.m-stats .d-num { grid-column:2; grid-row:1 / span 2; font-size:31px; text-align:right; align-self:center; }
+.m-stats .d-note { grid-column:1; grid-row:2; margin-top:2px; }
+.m-stats .d-note-wide { grid-column:1 / -1; grid-row:3; margin-top:6px; }
+
+/* ── Module: three-card row (icon tile + title + copy) ──────────────── */
+.d-feature { display:flex; gap:12px; align-items:flex-start; padding:12px 14px 13px 12px; }
+.d-tile {                          /* the site's gradient icon tile */
+  flex:none;
+  width:34px; height:34px;
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color:var(--page-bg);
+}
+.d-tile svg { width:20px; height:20px; }
+.d-feature h3 {
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:12.5px;
+  line-height:1.25;
+  color:var(--white);
+}
+.d-feature p { margin-top:3px; font-size:9.8px; line-height:1.42; color:var(--text); }
+.d-foot { margin:10px 6px 0; font-size:9.4px; line-height:1.45; text-align:center; color:var(--text); }
+
+/* ── Module: CTA panel ──────────────────────────────────────────────── */
+.d-panel {
+  background:radial-gradient(at 50% 0%, var(--indigo) 0%, var(--page-bg) 100%);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:26px 18px 24px;
+  text-align:center;
+}
+.d-panel h2 {
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:21px;
+  line-height:1.2;
+  color:var(--ink);
+}
+.panel-sub { margin-top:7px; font-size:9.8px; line-height:1.45; color:var(--text); }
+.d-stats { display:flex; justify-content:center; gap:30px; margin-top:20px; }
+.d-stat .d-num { font-size:31px; }
+.d-stat .d-label { margin-top:3px; font-weight:600; font-size:10.5px; color:var(--primary); }
+.panel-note { margin:18px 4px 0; font-size:10px; line-height:1.5; color:var(--on-dark-2); }
+
+/* ── Persistent chrome (never rotates) ─────────────────────────────── */
+#top-bar {                         /* the site's transparent header: lockup left, glass pill right */
+  position:absolute;
+  top:0; left:0; right:0;
+  height:var(--hdr-h);
+  z-index:6;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 var(--gutter);
+}
+#logo { display:block; width:126px; height:20px; }
+#ticker {                          /* the header's "Contact us" pill, carrying the ticker */
+  padding:5px 11px;
+  border:1px solid var(--glass-line);
+  border-radius:var(--btn-radius);
+  background:var(--glass-grad), var(--glass);
+  font-family:var(--font-body);
+  font-weight:500;
+  font-size:9.5px;
+  letter-spacing:0.02em;
+  color:var(--ink);
+}
+
+#bottom-fixed {
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:var(--bf-h);
+  z-index:5;
+  padding-top:var(--bf-pad);
+}
+#controls { position:relative; height:var(--ctrl-h); margin-bottom:var(--bf-gap); }
+
+/* Slider dots: rings, filled sky when active */
+#dots {
+  display:flex;
+  align-items:center;
+  gap:2px;
+  height:var(--ctrl-h);
+  margin-left:calc(var(--gutter) - 4px);
+}
+.dot { position:relative; width:18px; height:18px; }
+.dot::before {
+  content:'';
+  position:absolute;
+  inset:4px;
+  border:1px solid var(--primary);
+  border-radius:50%;
+  background-color:transparent;
+  transition:background-color .3s ease;
+}
+.dot.active::before { background-color:var(--primary); }
+
+.nav-arrow {                       /* round glass control */
+  position:absolute;
+  top:0;
+  width:var(--ctrl-h);
+  height:var(--ctrl-h);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--glass-line);
+  border-radius:50%;
+  background:var(--glass-grad), var(--glass);
+  color:var(--ink);
+  transition:background-color .2s ease, transform .15s ease;
+}
+.nav-arrow svg { width:11px; height:11px; }
+.nav-arrow:active { transform:scale(0.9); }
+#arrow-next { right:var(--gutter); }
+#arrow-prev { right:calc(var(--gutter) + var(--ctrl-h) + 6px); }
+
+/* CTA — the site's glass pill .elementor-button */
+#cta {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  height:var(--cta-h);
+  margin:0 var(--gutter) var(--bf-gap-2);
+  border:1px solid var(--glass-line);
+  border-radius:var(--btn-radius);
+  background:var(--glass-grad), var(--glass);
+  font-family:var(--font-btn);
+  font-weight:600;
+  font-size:12.5px;
+  line-height:1;
+  color:var(--ink);
+  transition:background-color .2s ease, border-color .2s ease;
+}
+#cta-arrow {
+  width:15px; height:15px;
+  fill:var(--ink);
+  animation:d-nudge 1.4s ease-in-out 2.4s 4;
+}
+/* hover: the pill brightens; the whole-banner hover signals the click */
+#banner:hover #cta, #cta:hover, #cta:focus-visible {
+  background:var(--glass-grad), rgba(205,211,233,0.22);
+  border-color:rgba(255,255,255,0.7);
+}
+@keyframes d-nudge { 0%, 100% { transform:translateX(0); } 50% { transform:translateX(3px); } }
+
+/* Required disclosure — set in the site's footer style: small grey-white sans under a hairline. It names what is
+   forward-looking and the risks, in four lines of 7.4px at near-full strength. */
+#fls {
+  height:var(--foot-h);
+  padding:5px calc(var(--gutter) - 3px) 0;
+  border-top:1px solid rgba(255,255,255,0.1);
+  font-size:7.8px;
+  font-weight:500;
+  line-height:10px;
+  text-align:left;
+  text-wrap-style:pretty;
+  overflow:hidden;
+  color:rgba(247,248,245,0.86);
+}
+
+/* ── Entrance sequence (initial load only) ─────────────────────────── */
+.reveal {
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+}
+#top-bar.reveal { transform:translateY(-8px); }
+#banner.is-live .reveal { opacity:1; transform:none; }
+#top-bar[data-delay="0"] { transition-delay:.05s; }
+#bottom-fixed[data-delay="4"] { transition-delay:.45s; }
+
+#click-tag-wrapper { position:absolute; width:0; height:0; overflow:hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  #cta-arrow { animation:none; }
+  .reveal { transition-duration:.01s; transition-delay:0s !important; }
+  .slide, .slide > * { transition-duration:.2s; transition-delay:0s; }
+}

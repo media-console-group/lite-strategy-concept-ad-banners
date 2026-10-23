@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="ad.size" content="width=300,height=600">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=300,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Lite Strategy, Inc. — Investor Relations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Rethink+Sans:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--
+  Lite Strategy, Inc. — IR display banner, 300x600 — Concept D: Corporate site / brand-native.
+  Promotes: https://gracinting.github.io/litestrategy-ir-concept/
+  Styled from the company's own CORPORATE website (https://www.litestrategy.com/), not the IR concept page that
+  Concepts A-C are built from: its dark ground with the tiled logo mark, the white-on-dark logo lockup (the same file
+  as on the IR page), IBM Plex Sans Condensed headline with the sky-to-lime gradient, indigo cards with a sky 37%
+  border, gradient icon tiles, and its glass pill buttons (Rethink Sans). "Homepage in miniature": each slide is one
+  module of the corporate homepage:
+    1 hero -> 2 dashboard stat cards -> 3 three-card row -> 4 CTA panel.
+  The site has no photography, so there are no photos; every number comes from .tmp/facts.md (10-K, 10-Qs, company
+  releases), never from the site's live widgets. Written by .tmp/gen_d.py; style.css is hand-edited.
+-->
+
+<div id="banner" aria-label="Lite Strategy, Inc. investor relations advertisement">
+
+  <div id="slides">
+    
+    <!-- Slide 1 — Hero -->
+    <section class="slide m-hero" data-index="0">
+      <!-- Module: corporate homepage hero (.elementor-heading-title h1): IBM Plex Sans Condensed 900 uppercase with the
+           sky-to-lime gradient, a white 600 sub-line, then the dashboard's "LTC Holdings" stat card.
+           Facts: [10-K] 832,716 LTC at Jun 30, 2026; [10-K] the company "holds LTC as a primary reserve asset". -->
+      <h2 class="hero-h"><span>A Litecoin</span><span>treasury</span><span>company</span></h2>
+      <p class="hero-sub">Lite Strategy describes Litecoin as its primary reserve asset.</p>
+      <div class="d-card hero-card">
+        <p class="d-title">LTC Holdings</p>
+        <p class="d-num">832,716</p>
+        <p class="d-note">At Jun&nbsp;30, 2026, per the Form&nbsp;10-K. Includes 182,000 LTC transferred to GSR Markets, an affiliate of the company’s asset manager, as collateral for covered calls (carried as a receivable).</p>
+      </div>
+    </section>
+
+    <!-- Slide 2 — Stat cards -->
+    <section class="slide m-stats" data-index="1">
+      <!-- Module: corporate homepage dashboard stat cards (.e-con with the indigo gradient and 37% sky border):
+           sky 600 title, white 500 value.
+           Facts: [10-K Note 4] fair value $34,899K, cost basis $82,413K at Jun 30, 2026; [10-Q] 99.4% at Sep 30, 2025. -->
+      <h2 class="sec-h">Fair value, measured against cost basis</h2>
+      <div class="d-card">
+        <p class="d-title">Fair Value</p>
+        <p class="d-num">$34.9M</p>
+        <p class="d-note">Recorded at Jun&nbsp;30, 2026</p>
+      </div>
+      <div class="d-card">
+        <p class="d-title">Cost Basis</p>
+        <p class="d-num">$82.4M</p>
+        <p class="d-note d-note-wide">As filed: first-in, first-out, reset when coins move to GSR Markets as collateral. Not the original purchase price.</p>
+      </div>
+      <div class="d-card d-card-hi">
+        <p class="d-title">Fair Value ÷ Cost Basis</p>
+        <p class="d-num">42.3%</p>
+        <p class="d-note">Was 99.4% at Sep&nbsp;30, 2025</p>
+      </div>
+    </section>
+
+    <!-- Slide 3 — Feature cards -->
+    <section class="slide m-cards" data-index="2">
+      <!-- Module: corporate homepage three-card row ("Treasury Strategy / Shareholder Growth / Our Mission"):
+           gradient icon tile, white 600 title, grey body, indigo card with the sky border, stacked for portrait.
+           Facts: [10-K cash flow FY2026] LTC sales $5,040K, net covered-call proceeds $853K, at-the-market net proceeds $4,628K,
+           repurchases $4,895K; [10-K] 4,378,525 shares to Jun 30 + 1,999,604 Jul 1 to Sep 22, 2026 = about 6.4M (derived). -->
+      <h2 class="sec-h">Treasury operations, fiscal 2026</h2>
+      <div class="d-card d-feature">
+        <span class="d-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h14M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div><h3>Litecoin sold</h3><p>$5.0M of proceeds from sales of Litecoin.</p></div>
+      </div>
+      <div class="d-card d-feature">
+        <span class="d-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7.5L19 8v12.5H7zM14.5 3.5V8H19M10 12.5h6M10 16h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div><h3>Covered calls written</h3><p>$0.9M of net proceeds from options written on part of the holdings.</p></div>
+      </div>
+      <div class="d-card d-feature">
+        <span class="d-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 11a7 7 0 0 0-12-4.5L5 8.5M5 4v4.5h4.5M5 13a7 7 0 0 0 12 4.5l2-2M19 20v-4.5h-4.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div><h3>Shares repurchased</h3><p>$4.9M in fiscal 2026 (4.4M shares). 6.4M in all through Sep&nbsp;22, 2026.</p></div>
+      </div>
+      <p class="d-foot">Separate lines of the cash flow statement. The company also raised $4.6M net from at-the-market share sales in fiscal 2026.</p>
+    </section>
+
+    <!-- Slide 4 — CTA panel -->
+    <section class="slide m-panel" data-index="3">
+      <!-- Module: corporate homepage "Invest in the Future of Digital Money" panel (.e-con, radial indigo gradient,
+           20px radius, sky 37% border, centred white 600 heading), here with the fiscal 2026 results.
+           Facts: [10-K] net loss $71,150K, no revenue; change in fair value of digital assets $54,408K + receivable
+           $5,653K = 84% (derived); cash $5,706K; total liabilities $1,069K, no borrowings at Jun 30, 2026. -->
+      <div class="d-panel">
+        <h2>Fiscal 2026 results</h2>
+        <p class="panel-sub">Form 10-K, year ended Jun&nbsp;30, 2026. No revenue.</p>
+        <div class="d-stats">
+          <div class="d-stat"><p class="d-num">$71.2M</p><p class="d-label">Net loss</p></div>
+          <div class="d-stat"><p class="d-num">$5.7M</p><p class="d-label">Cash, from $18.0M</p></div>
+        </div>
+        <p class="panel-note">About 84% of the net loss was the change in the fair value of Litecoin, including realized losses on coins sold or moved. No loans drawn at Jun&nbsp;30, 2026.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Persistent chrome — the corporate site's header, never rotates -->
+  <header id="top-bar" class="reveal" data-delay="0">
+    <img id="logo" src="assets/logo.svg" alt="Lite Strategy" width="126" height="20">
+    <span id="ticker">NASDAQ:&nbsp;LITS</span>
+  </header>
+
+  <div id="bottom-fixed" class="reveal" data-delay="4">
+    <div id="controls">
+      <div id="dots" role="tablist" aria-label="Slide selector">
+        <button class="dot active" data-index="0" aria-label="Slide 1: Overview"></button>
+        <button class="dot" data-index="1" aria-label="Slide 2: Fair value and cost basis"></button>
+        <button class="dot" data-index="2" aria-label="Slide 3: Treasury operations"></button>
+        <button class="dot" data-index="3" aria-label="Slide 4: Fiscal 2026 results"></button>
+      </div>
+      <button type="button" class="nav-arrow" id="arrow-prev" aria-label="Previous slide">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 6 8l4 5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="nav-arrow" id="arrow-next" aria-label="Next slide">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l4 5-4 5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- The corporate site's glass pill .elementor-button: 40px radius, 1px white 38% border -->
+    <a href="#" id="cta">
+      <span>View Investor Resources</span>
+      <svg id="cta-arrow" viewBox="0 0 24 25" aria-hidden="true"><path d="M12 4.18066L10.585 5.59566L16.17 11.1807H4V13.1807H16.17L10.585 18.7657L12 20.1807L20 12.1807L12 4.18066Z"/></svg>
+    </a>
+
+    <p id="fls">Figures as of Jun 30, 2026 unless dated; Litecoin’s price has changed since. Not an offer. Forward-looking statements. Risks: one volatile asset (fair value was below cost basis), dilution (warrants, at-the-market sales), related-party manager, 182,000 LTC held by GSR Markets as collateral, Investment Company Act status, Nasdaq $1.00 minimum bid. See SEC filings.</p>
+  </div>
+
+  <!-- Standard HTML5-ad click-tag plumbing -->
+  <div id="click-tag-wrapper"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
